@@ -1,5 +1,5 @@
 Class {
-	#name : #PasswordGrammar,
+	#name : #AoCPasswordGrammar,
 	#superclass : #PPCompositeParser,
 	#instVars : [
 		'number',
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #counting }
-PasswordGrammar class >> countInvalidPasswords: aCollection [
+AoCPasswordGrammar class >> countInvalidPasswords: aCollection [
 	| parser |
 	parser := self new.
 	^ aCollection count: [ :password | 
@@ -24,60 +24,77 @@ PasswordGrammar class >> countInvalidPasswords: aCollection [
 			                       not ].
 ]
 
+{ #category : #counting }
+AoCPasswordGrammar class >> highlight: inputLinesAsString [
+
+	| parser text inputLines |
+	parser := self new.
+	text := Text new.
+	inputLines := inputLinesAsString splitOn: Character cr.
+	inputLines do: [ :line | 
+		(parser matches: line)
+			ifTrue: [ text append: line ]
+			ifFalse: [ 
+				text append: (line asText addAttribute: TextColor red) ].
+		text append: Character cr ].
+
+	^ text
+]
+
 { #category : #grammar }
-PasswordGrammar >> interval [
+AoCPasswordGrammar >> interval [
 
 	^ number , $- asParser , number ==> [ :nodes | Interval from: nodes first to: nodes last ]
 ]
 
 { #category : #grammar }
-PasswordGrammar >> invalidPassword [
+AoCPasswordGrammar >> invalidPassword [
 
 	^ validator negate flatten
 ]
 
 { #category : #grammar }
-PasswordGrammar >> line [
+AoCPasswordGrammar >> line [
 
 	^ invalidPassword / validPassword 
 ]
 
 { #category : #grammar }
-PasswordGrammar >> number [
+AoCPasswordGrammar >> number [
 
 	^ #digit asParser plus trim flatten ==> [ :str | str asNumber ]
 ]
 
 { #category : #grammar }
-PasswordGrammar >> password [
+AoCPasswordGrammar >> password [
 
 	^ #letter asParser plus trim flatten
 ]
 
 { #category : #grammar }
-PasswordGrammar >> policy [ 
+AoCPasswordGrammar >> policy [ 
 ^ interval, #letter asParser trim, $: asParser.
 ]
 
 { #category : #grammar }
-PasswordGrammar >> policyWithPassword [
+AoCPasswordGrammar >> policyWithPassword [
 ^ policy , password.
 ]
 
 { #category : #grammar }
-PasswordGrammar >> start [
+AoCPasswordGrammar >> start [
 
 	^ validPassword
 ]
 
 { #category : #grammar }
-PasswordGrammar >> validPassword [
+AoCPasswordGrammar >> validPassword [
 
 	^ validator flatten
 ]
 
 { #category : #grammar }
-PasswordGrammar >> validator [
+AoCPasswordGrammar >> validator [
 
 	^ policyWithPassword ==> [ :tokens | 
 	  | policyInterval policyLetter passwordText numOccurrencesOfLetter |

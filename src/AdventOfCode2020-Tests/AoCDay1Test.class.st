@@ -1,5 +1,5 @@
 Class {
-	#name : #Day1Test,
+	#name : #AoCDay1Test,
 	#superclass : #TestCase,
 	#instVars : [
 		'inputEntries'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #running }
-Day1Test >> setUp [
+AoCDay1Test >> setUp [
 
 	super setUp.
 	inputEntries := #( 1735 1700 1358 1908 1634 2006 762 1492 1917 1591 1571
@@ -33,7 +33,7 @@ Day1Test >> setUp [
 ]
 
 { #category : #'as yet unclassified' }
-Day1Test >> testFindThreeEntriesThatSumToAValue [
+AoCDay1Test >> testFindThreeEntriesThatSumToAValue [
 
 	"What is the product of the three entries that sum to 2020?"
 
@@ -47,7 +47,7 @@ Day1Test >> testFindThreeEntriesThatSumToAValue [
 ]
 
 { #category : #'as yet unclassified' }
-Day1Test >> testFindTwoEntriesThatSumToAValue [
+AoCDay1Test >> testFindTwoEntriesThatSumToAValue [
 
 	"Find the two entries that sum to 2020; what do you get if you multiply them together?"
 

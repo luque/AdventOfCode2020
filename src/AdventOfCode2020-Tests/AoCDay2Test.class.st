@@ -1007,58 +1007,75 @@ PasswordGrammar countInvalidPasswords: ('1-4 m: mrfmmbjxr
 
 "
 Class {
-	#name : #Day2Test,
+	#name : #AoCDay2Test,
 	#superclass : #TestCase,
+	#instVars : [
+		'passwordGrammar'
+	],
 	#category : #'AdventOfCode2020-Tests-Day 2'
 }
 
+{ #category : #tests }
+AoCDay2Test >> highlightedText [
+
+	<script: 'self new highlightedText'>
+	| text |
+	text := '1-3 a: abcda
+2-4 b: aaa
+3-3 c: abccc
+1-1 d: abcdead
+1-3 a: abbcaada
+2-5 h: ahhbd'.
+
+	(AoCPasswordGrammar highlight: text) inspect
+]
+
 { #category : #'as yet unclassified' }
-Day2Test >> invalidPassword [
+AoCDay2Test >> invalidPassword [
 
 	^ '1-3 a: abcaadea'
 ]
 
 { #category : #tests }
-Day2Test >> passwordValidator [
+AoCDay2Test >> passwordValidator [
 
-^ PasswordGrammar new
+^ AoCPasswordGrammar new
 ]
 
 { #category : #running }
-Day2Test >> setUp [
+AoCDay2Test >> setUp [
 
 	super setUp.
-
+	
+passwordGrammar := AoCPasswordGrammar new.
 ]
 
 { #category : #tests }
-Day2Test >> testCountInvalidPasswords [
+AoCDay2Test >> testCountInvalidPasswords [
 
 	|  inputs |
 	inputs := Array with: self validPassword with: self invalidPassword.
 	self
-		assert: (PasswordGrammar countInvalidPasswords: inputs)
+		assert: (AoCPasswordGrammar countInvalidPasswords: inputs)
 		equals: 1
 ]
 
 { #category : #tests }
-Day2Test >> testInvalidPassword [
+AoCDay2Test >> testInvalidPassword [
 
-	| policyWithPasswordValidator |
-	policyWithPasswordValidator := self passwordValidator.
-	self deny: (policyWithPasswordValidator matches: self invalidPassword)
+	self deny:
+		(passwordGrammar matches: self invalidPassword)
 ]
 
 { #category : #tests }
-Day2Test >> testValidPassword [
+AoCDay2Test >> testValidPassword [
 
-	| policyWithPasswordValidator |
-	policyWithPasswordValidator := self passwordValidator.
-	self assert: (policyWithPasswordValidator matches: self validPassword)
+	self assert:
+		(passwordGrammar matches: self validPassword)
 ]
 
 { #category : #'as yet unclassified' }
-Day2Test >> validPassword [
+AoCDay2Test >> validPassword [
 
 	^ '1-3 a: abcde'
 ]

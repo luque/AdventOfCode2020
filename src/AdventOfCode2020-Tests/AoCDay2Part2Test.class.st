@@ -1,9 +1,9 @@
 "
-Solution for the Day 2 puzzle:
+To get the solution for the Day 2 Part 2 puzzle:
 
 How many passwords are valid according to their policies?
 
-PasswordGrammar countInvalidPasswords: ('1-4 m: mrfmmbjxr
+AoCPart2PasswordGrammar countValidPasswords: ('1-4 m: mrfmmbjxr
 5-16 b: bbbbhbbbbpbxbbbcb
 7-8 x: qxrxmxccxxx
 9-11 k: kkkkkkktmkhk
@@ -1002,12 +1002,10 @@ PasswordGrammar countInvalidPasswords: ('1-4 m: mrfmmbjxr
 5-8 w: cwwwzwwb
 7-8 r: rrrrxrrr
 8-9 f: sgdcqfhfcfsflb
-3-7 g: gdgtnfggq' splitOn: Character lf)
-
-
+3-7 g: gdgtnfggq' splitOn: Character cr)
 "
 Class {
-	#name : #AoCDay2Test,
+	#name : #AoCDay2Part2Test,
 	#superclass : #TestCase,
 	#instVars : [
 		'passwordGrammar'
@@ -1015,67 +1013,61 @@ Class {
 	#category : #'AdventOfCode2020-Tests-Day 2'
 }
 
-{ #category : #tests }
-AoCDay2Test >> highlightedText [
+{ #category : #'example-highlighting' }
+AoCDay2Part2Test >> highlightedText [
 
 	<script: 'self new highlightedText'>
 	| text |
 	text := '1-3 a: abcda
 2-4 b: aaa
-3-3 c: abccc
-1-1 d: abcdead
+3-4 c: abccc
+1-3 d: abcdead
 1-3 a: abbcaada
 2-5 h: ahhbd'.
 
-	(AoCPasswordGrammar highlight: text) inspect
+	(AoCPart2PasswordGrammar highlight: text) inspect
 ]
 
-{ #category : #'as yet unclassified' }
-AoCDay2Test >> invalidPassword [
+{ #category : #examples }
+AoCDay2Part2Test >> invalidPassword [
 
-	^ '1-3 a: abcaadea'
-]
-
-{ #category : #tests }
-AoCDay2Test >> passwordValidator [
-
-^ AoCPasswordGrammar new
+	^ '1-3 a: abah'
 ]
 
 { #category : #running }
-AoCDay2Test >> setUp [
+AoCDay2Part2Test >> setUp [
 
 	super setUp.
-	
-passwordGrammar := AoCPasswordGrammar new.
+
+	passwordGrammar := AoCPart2PasswordGrammar  new
 ]
 
 { #category : #tests }
-AoCDay2Test >> testCountInvalidPasswords [
+AoCDay2Part2Test >> testCountValidPasswords [
 
-	|  inputs |
+	| inputs |
 	inputs := Array with: self validPassword with: self invalidPassword.
 	self
-		assert: (AoCPasswordGrammar countInvalidPasswords: inputs)
+		assert: (AoCPart2PasswordGrammar countValidPasswords: inputs)
 		equals: 1
 ]
 
 { #category : #tests }
-AoCDay2Test >> testInvalidPassword [
+AoCDay2Part2Test >> testInvalidPassword [
 
 	self deny:
 		(passwordGrammar matches: self invalidPassword)
 ]
 
 { #category : #tests }
-AoCDay2Test >> testValidPassword [
+AoCDay2Part2Test >> testValidPassword [
 
 	self assert:
 		(passwordGrammar matches: self validPassword)
 ]
 
-{ #category : #'as yet unclassified' }
-AoCDay2Test >> validPassword [
+{ #category : #examples }
+AoCDay2Part2Test >> validPassword [
 
-	^ '1-3 a: abcde'
+	^ '2-4 a: baa'
 ]

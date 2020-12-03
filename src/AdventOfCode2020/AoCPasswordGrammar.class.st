@@ -1,3 +1,6 @@
+"
+A PetitParser based grammar for the Day 2 puzzle inputs.
+"
 Class {
 	#name : #AoCPasswordGrammar,
 	#superclass : #PPCompositeParser,
@@ -8,20 +11,17 @@ Class {
 		'password',
 		'policyWithPassword',
 		'validator',
-		'validPassword',
-		'invalidPassword',
-		'line'
+		'validPassword'
 	],
 	#category : #'AdventOfCode2020-Day 2'
 }
 
 { #category : #counting }
-AoCPasswordGrammar class >> countInvalidPasswords: aCollection [
+AoCPasswordGrammar class >> countValidPasswords: aCollection [
+
 	| parser |
 	parser := self new.
-	^ aCollection count: [ :password | 
-		                    (parser matches: password)
-			                       not ].
+	^ aCollection count: [ :password | parser matches: password ]
 ]
 
 { #category : #counting }
@@ -34,8 +34,7 @@ AoCPasswordGrammar class >> highlight: inputLinesAsString [
 	inputLines do: [ :line | 
 		(parser matches: line)
 			ifTrue: [ text append: line ]
-			ifFalse: [ 
-				text append: (line asText addAttribute: TextColor red) ].
+			ifFalse: [ text append: (line asText addAttribute: TextColor red) ].
 		text append: Character cr ].
 
 	^ text
@@ -45,18 +44,6 @@ AoCPasswordGrammar class >> highlight: inputLinesAsString [
 AoCPasswordGrammar >> interval [
 
 	^ number , $- asParser , number ==> [ :nodes | Interval from: nodes first to: nodes last ]
-]
-
-{ #category : #grammar }
-AoCPasswordGrammar >> invalidPassword [
-
-	^ validator negate flatten
-]
-
-{ #category : #grammar }
-AoCPasswordGrammar >> line [
-
-	^ invalidPassword / validPassword 
 ]
 
 { #category : #grammar }
@@ -78,7 +65,8 @@ AoCPasswordGrammar >> policy [
 
 { #category : #grammar }
 AoCPasswordGrammar >> policyWithPassword [
-^ policy , password.
+
+	^ policy , password trim
 ]
 
 { #category : #grammar }
@@ -98,7 +86,6 @@ AoCPasswordGrammar >> validator [
 
 	^ policyWithPassword ==> [ :tokens | 
 	  | policyInterval policyLetter passwordText numOccurrencesOfLetter |
-	  "	  tokens := cc value."
 	  policyInterval := tokens first first.
 	  policyLetter := tokens first second.
 	  passwordText := tokens second.

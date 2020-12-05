@@ -7,24 +7,13 @@ Class {
 { #category : #counting }
 AoCBitBltForestMap >> countTreesOnPath [
 
-	| mapForm slopeForm pathVertex slopeCanvas |
+	| mapForm  |
 	mapForm := self form.
-	slopeForm := Form extent: mapForm extent depth: 8.
-	slopeForm fillBlack.
-	pathVertex := OrderedCollection new.
-	1 to: ((mapForm height // slope y) max: (mapForm width // slope x)) ceiling do: [ :i | 
-	pathVertex add: (slope * i) ].
-	slopeCanvas := slopeForm getCanvas.
-	pathVertex do: [ :vertex | 
-		slopeCanvas
-			drawPolygon: { vertex }
-			color: Color white
-			borderWidth: 1
-			borderColor: Color white ].
+	(BitBlt toForm: mapForm)
+		copyForm: self slopeMaskForm
+		to: 0 @ 0
+		rule: Form and.
 
-	(BitBlt toForm: mapForm) copyForm: slopeForm to: 0 @ 0 rule: Form and.
-
-	mapForm unhibernate.
 	^ mapForm bits count: [ :bit | 
 		  (Color colorFromPixelValue: bit depth: 32) green
 			  closeTo: 1
@@ -35,8 +24,27 @@ AoCBitBltForestMap >> countTreesOnPath [
 AoCBitBltForestMap >> form [
 
 	| form |
-	form := Form extent: self extendedMapWidth @ self extendedMapHeight  depth: 32.
-	form fillGray.
+	form := Form
+		        extent: self extendedMapWidth @ self extendedMapHeight
+		        depth: 32.
+	form fillBlack.
 	treesAsPoints do: [ :point | form colorAt: point put: Color green ].
 	^ form
+]
+
+{ #category : #counting }
+AoCBitBltForestMap >> slopeMaskForm [
+
+
+	| slopeForm numPointsInTrajectory |
+	slopeForm := Form extent:(self extendedMapWidth @ self extendedMapHeight ) depth: 8.
+	slopeForm fillBlack.
+	numPointsInTrajectory := ((self extendedMapHeight  // slope y max:
+		                           self extendedMapWidth // slope x) - 1) ceiling.
+	0 to: numPointsInTrajectory do: [ :i | 
+		slopeForm
+			fill: (Rectangle point: slope * i point: slope * i + (1 @ 1))
+			fillColor: Color white ].
+		
+	^ slopeForm
 ]

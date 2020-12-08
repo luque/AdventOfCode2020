@@ -1,7 +1,7 @@
 "
-Solution for the Day 4 Part 1:
+Solution for the Day 4 - Part 2 puzzle:
 
-Evaluate the following code:
+Execute the following code:
 
 input := 'byr:1937
 eyr:2030 pid:154364481
@@ -1035,148 +1035,156 @@ cid:274 pid:390115952 byr:1934 hgt:161cm iyr:2017 hcl:#b95b0d
 ecl:#a16ec8 pid:187cm hcl:z iyr:2029 hgt:170
 byr:2008'.
 
-PassportGrammar countValidPassports: (input splitOn: (Character lf asString , Character lf asString))
+PassportGrammarPart2 countValidPassports: (input splitOn: Character lf asString , Character lf asString)
 "
 Class {
-	#name : #PassportGrammarTest,
+	#name : #PassportGrammarPart2Test,
 	#superclass : #PPCompositeParserTest,
 	#category : #'AdventOfCode2020-Tests-Day 4 - Passport Processing'
 }
 
 { #category : #accessing }
-PassportGrammarTest >> parserClass [ 
+PassportGrammarPart2Test >> parserClass [
 
-^ PassportGrammar 
+	^ PassportGrammarPart2
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testBirthYearParser [
+PassportGrammarPart2Test >> testBirthYearParser [
 
 self parse: 'byr:1975' rule: #byr 
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testCountryIdParser [
+PassportGrammarPart2Test >> testCountryIdParser [
 
 	self parse: 'cid:145' rule: #cid
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testExpirationYearParser [
+PassportGrammarPart2Test >> testExpirationYearParser [
 
 	self parse: 'eyr:2021' rule: #eyr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testEyeColorParser [
+PassportGrammarPart2Test >> testEyeColorParser [
 
-	self parse: 'ecl:brn' rule: #ecl
+	#( 'amb' 'blu' 'brn' 'gry' 'grn' 'hzl' 'oth' ) do: [ :color | 
+		self parse: 'ecl:' , color rule: #ecl ]
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testHairColorParser [
+PassportGrammarPart2Test >> testHairColorParser [
 
 	self parse: 'hcl:#ae17e1' rule: #hcl
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testHeightInCmParser [
+PassportGrammarPart2Test >> testHeightInCmParser [
 
 	self parse: 'hgt:185cm' rule: #hgt
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testHeightInInchesParser [
+PassportGrammarPart2Test >> testHeightInInchesParser [
 
 	self parse: 'hgt:60in' rule: #hgt
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidBirthYearParser [
+PassportGrammarPart2Test >> testInvalidBirthYearParser [
 
 	self fail: 'byr:' rule: #byr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidBirthYearValueParser [
+PassportGrammarPart2Test >> testInvalidBirthYearValueParser [
 
-	self fail: 'byr:19a' rule: #byr
+	self fail: 'byr:1919' rule: #byr.
+	self fail: 'byr:2003' rule: #byr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidCountryIdParser [
+PassportGrammarPart2Test >> testInvalidCountryIdParser [
 
 	self fail: 'coid:145' rule: #cid
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidCountryIdValueParser [
+PassportGrammarPart2Test >> testInvalidCountryIdValueParser [
 
 	self fail: 'cid:145A' rule: #cid
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidExpirationYearParser [
+PassportGrammarPart2Test >> testInvalidExpirationYearParser [
 
 	self fail: 'eyr:' rule: #eyr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidExpirationYearValueParser [
+PassportGrammarPart2Test >> testInvalidExpirationYearValueParser [
 
-	self fail: 'eyr:202A' rule: #eyr
+	self fail: 'eyr:2019' rule: #eyr.
+	self fail: 'eyr:2031' rule: #eyr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidEyeColorParser [
+PassportGrammarPart2Test >> testInvalidEyeColorParser [
 
 	self fail: 'ecol:gre' rule: #ecl
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidEyeColorValueParser [
+PassportGrammarPart2Test >> testInvalidEyeColorValueParser [
 
-	self fail: 'ecl:1 23' rule: #ecl
+	self fail: 'ecl:red' rule: #ecl
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidHairColorParser [
+PassportGrammarPart2Test >> testInvalidHairColorParser [
 
 	self fail: 'hcol:#ae17e1' rule: #hcl
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidHairColorValueParser [
+PassportGrammarPart2Test >> testInvalidHairColorValueParser [
 
-	self fail: 'hcl:af 17e1' rule: #hcl
+	self fail: 'hcl:#ag1 7e1' rule: #hcl
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidHeightParser [
+PassportGrammarPart2Test >> testInvalidHeightParser [
 
 	self fail: 'hgt 180cm' rule: #hgt
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidHeightValueParser [
+PassportGrammarPart2Test >> testInvalidHeightValueParser [
 
-	self fail: 'hgt:180d' rule: #hgt
+	self fail: 'hgt:149cm' rule: #hgt.
+	self fail: 'hgt:194cm' rule: #hgt.
+	self fail: 'hgt:58in' rule: #hgt.
+	self fail: 'hgt:77in' rule: #hgt.
+	
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidIssueYearParser [
+PassportGrammarPart2Test >> testInvalidIssueYearParser [
 
 	self fail: 'iyyr:2018' rule: #iyr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidIssueYearValueParser [
+PassportGrammarPart2Test >> testInvalidIssueYearValueParser [
 
-	self fail: 'iyyr:abc' rule: #iyr
+	self fail: 'iyr:2009' rule: #iyr.
+	self fail: 'iyr:2021' rule: #iyr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidPassport [
+PassportGrammarPart2Test >> testInvalidPassport [
 
 	self
 		fail:
@@ -1185,40 +1193,40 @@ PassportGrammarTest >> testInvalidPassport [
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidPassportIdParser [
+PassportGrammarPart2Test >> testInvalidPassportIdParser [
 
 	self fail: 'passid:028048884' rule: #pid
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testInvalidPassportIdValueParser [
+PassportGrammarPart2Test >> testInvalidPassportIdValueParser [
 
-	self fail: 'pid: 1234567890' rule: #pid
+	self fail: 'pid:0123' rule: #pid
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testIssueYearParser [
+PassportGrammarPart2Test >> testIssueYearParser [
 
 	self parse: 'iyr:2018' rule: #iyr
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testOneLinePassport [
+PassportGrammarPart2Test >> testOneLinePassport [
 
 	self
 		parse:
-		'ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm'
+		'ecl:gry pid:860033327 eyr:2023 hcl:#fffffd byr:1979 iyr:2014 cid:147 hgt:183cm'
 		rule: #validPassport
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testPassportIdParser [
+PassportGrammarPart2Test >> testPassportIdParser [
 
 	self parse: 'pid:028048884' rule: #pid
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testSeveralLinesPassport [
+PassportGrammarPart2Test >> testSeveralLinesPassport [
 
 	self
 		parse:
@@ -1227,7 +1235,7 @@ PassportGrammarTest >> testSeveralLinesPassport [
 ]
 
 { #category : #tests }
-PassportGrammarTest >> testValidPassportWithoutCountryId [
+PassportGrammarPart2Test >> testValidPassportWithoutCountryId [
 
 	self
 		parse:

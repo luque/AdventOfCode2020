@@ -1,7 +1,7 @@
 Class {
 	#name : #AoCBitBltForestMap,
 	#superclass : #AoCForestMap,
-	#category : #'AdventOfCode2020-Day 3'
+	#category : #'AdventOfCode2020-Day 3 - Toboggan Trajectory'
 }
 
 { #category : #counting }

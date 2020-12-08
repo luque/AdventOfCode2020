@@ -1012,7 +1012,7 @@ Class {
 	#instVars : [
 		'passwordGrammar'
 	],
-	#category : #'AdventOfCode2020-Tests-Day 2'
+	#category : #'AdventOfCode2020-Tests-Day 2 - Password Philosophy'
 }
 
 { #category : #'example-highlighting' }

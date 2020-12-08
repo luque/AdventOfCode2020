@@ -7,7 +7,7 @@ Class {
 		'extendedMap',
 		'treesAsPoints'
 	],
-	#category : #'AdventOfCode2020-Day 3'
+	#category : #'AdventOfCode2020-Day 3 - Toboggan Trajectory'
 }
 
 { #category : #'instance creation' }

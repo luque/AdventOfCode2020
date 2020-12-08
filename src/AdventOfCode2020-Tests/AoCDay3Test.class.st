@@ -5,7 +5,7 @@ Class {
 		'mapAsString',
 		'day3Map'
 	],
-	#category : #'AdventOfCode2020-Tests-Day 3'
+	#category : #'AdventOfCode2020-Tests-Day 3 - Toboggan Trajectory'
 }
 
 { #category : #private }

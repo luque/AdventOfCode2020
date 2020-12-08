@@ -1,7 +1,7 @@
 Class {
 	#name : #AoCPart2PasswordGrammar,
 	#superclass : #AoCPasswordGrammar,
-	#category : #'AdventOfCode2020-Day 2'
+	#category : #'AdventOfCode2020-Day 2 - Password Philosophy'
 }
 
 { #category : #grammar }

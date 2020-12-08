@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'inputEntries'
 	],
-	#category : #'AdventOfCode2020-Tests-Day 1'
+	#category : #'AdventOfCode2020-Tests-Day 1 - Report Repair'
 }
 
 { #category : #running }

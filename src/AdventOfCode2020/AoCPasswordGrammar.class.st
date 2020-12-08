@@ -13,7 +13,7 @@ Class {
 		'validator',
 		'validPassword'
 	],
-	#category : #'AdventOfCode2020-Day 2'
+	#category : #'AdventOfCode2020-Day 2 - Password Philosophy'
 }
 
 { #category : #counting }
